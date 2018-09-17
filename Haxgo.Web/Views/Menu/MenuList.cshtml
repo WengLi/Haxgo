@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "MenuList";
+    ViewBag.TopHref = "#Menu";
+    ViewBag.ChildHref = "/Menu/MenuList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content-box">
+    <table id="dg" title="菜单列表" class="easyui-datagrid" style="height: 500px"></table>
+</div>
+<div id="dd" style="padding:10px;">
+<form id="myform" method="post" action="/Menu/Edit">
+    <input type="hidden" name="Id" />
+    <fieldset>
+        <p>
+            <label>菜单名</label>
+            <input class="text-input small-input easyui-validatebox" type="text" name="Name" data-options="required:true"/>
+            <br />
+            <small>请填写菜单名</small>
+        </p>
+        <p>
+            <label>显示顺序</label>
+            <input type="text" class="text-input small-input easyui-numberbox" name="ShowOrder" data-options="min:0,precision:0,required:true">
+            <br />
+            <small>请填写显示顺序</small>
+        </p>
+        <p>
+            <input class="button" type="submit" value="提交" />
+        </p>
+    </fieldset>
+</form>
+</div>
+<script type="text/javascript">
+    $('#dg').datagrid({
+        url: '/Menu/MenuListJson',
+        pagination: true,
+        fitColumns: true,
+        rownumbers: true,
+        singleSelect: true,
+        columns: [[
+            { field: 'Name', title: '菜单名', width: 200 },
+            { field: 'ShowOrder', title: '显示顺序', width: 200 }
+        ]],
+        toolbar: [{
+            iconCls: 'icon-add',
+            text: '新增',
+            handler: function () {
+                $("#myform").attr("action", "/Menu/Add");
+                $("#myform").form('clear');
+                $("#dd").dialog('open');
+            }
+        }, '-', {
+            iconCls: 'icon-edit',
+            text: '编辑',
+            handler: function () {
+                var data = $('#dg').datagrid("getSelections")[0];
+                if (data != undefined) {
+                    $("#myform").attr("action", "/Menu/Edit");
+                    $("#myform").form('load', data);
+                    $("#dd").dialog('open');
+                }
+            }
+        }, '-', {
+            iconCls: 'icon-cancel',
+            text: '删除',
+            handler: function () {
+                var data = $('#dg').datagrid("getSelections")[0];
+                if (data != undefined)
+                {
+                    $.messager.confirm('确认', '确认删除?', function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: '/Menu/Delete?id=' + data.Id,
+                                success: function () {
+                                    $.messager.alert('消息', '删除成功');
+                                }
+                            });
+                            var index = $('#dg').datagrid('getRowIndex', data);
+                            $('#dg').datagrid('deleteRow', index);
+                        }
+                    })
+                }
+            }
+        }],
+        onDblClickRow: function (rowIndex, rowData) {
+            if (rowData != undefined) {
+                $("#myform").attr("action", "/Menu/Edit");
+                $("#myform").form('load', rowData);
+                $("#dd").dialog('open');
+            }
+        }
+    });
+    $("#myform").form({   
+        onSubmit: function () {
+            if ($(this).form("validate") == false)
+                return false;
+        },   
+        success: function (data) {
+            if (data == "true") {
+                $("#dd").dialog('close');
+                $.messager.alert('消息', '操作成功');
+                $('#dg').datagrid('reload');
+            }
+            else {
+                $.messager.alert('消息', '操作失败');
+            }
+        }   
+    });
+    $("#dd").dialog({
+        title: '新增或编辑菜单',
+        width: 800,
+        height: 300,
+        closed: true,
+        cache: false,
+        modal: true
+    });
+</script>

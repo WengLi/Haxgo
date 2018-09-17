@@ -1,0 +1,74 @@
+﻿@model List<User>
+@using Haxgo.Entities
+@{
+    ViewBag.Title = "UserList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+    <div class="content-box">
+      <div class="content-box-header">
+        <h3>用户列表</h3>
+        <div class="clear"></div>
+      </div>
+      @if(Model.Count > 0)
+      {
+      <div class="content-box-content">
+        <div class="tab-content default-tab" id="tab1">
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  <input class="check-all" type="checkbox" />
+                </th>
+                <th>用户名</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <td colspan="3">
+                  <div class="pagination">@{Html.RenderPartial("_Page", (object)ViewBag.Page);}</div>
+                  <div class="clear"></div>
+                </td>
+              </tr>
+            </tfoot>
+            <tbody>
+            @foreach(User item in Model)
+            {
+              <tr>
+                <td>
+                  <input type="checkbox" value="@item.Id" />
+                </td>
+                <td>@item.Name</td>
+                <td>
+                  <a href="/User/Edit/@item.Id" title="编辑"><img src="/Images/Admin/icons/pencil.png" alt="编辑" /></a> 
+                    <a href="/User/Delete/@item.Id" onclick="if(!confirm('确定删除？')){return false;}" title="删除"><img src="/Images/Admin/icons/cross.png" alt="删除" />
+                </td>
+              </tr>
+            }
+            </tbody>
+          </table>
+        </div>
+          <input type="button" value="新增" class="button" onclick="AddUser();" />
+      </div>
+      }
+      else
+      {
+          <div class="notification attention png_bg">
+            <div>暂无数据</div>
+          </div>
+          <input type="button" value="新增" class="button" onclick="AddUser();" />
+      }
+    </div>
+<script type="text/javascript">
+    $("#main-nav li a[href='#User']").addClass("current");
+    $("#main-nav li a[href='#User']").next().find("a[href='/User/UserList']").addClass("current");
+    $('tbody tr:even').addClass("alt-row");
+    $('.check-all').click(
+			function () {
+			    $(this).parent().parent().parent().parent().find("input[type='checkbox']").attr('checked', $(this).is(':checked'));
+			}
+		);
+    function AddUser(){
+        window.location.href = "/User/Add";
+    }
+</script>

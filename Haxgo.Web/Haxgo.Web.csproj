@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C8BE93FC-2241-4B70-929C-410E82BBF82C}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Haxgo.Web</RootNamespace>
+    <AssemblyName>Haxgo.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.3.0.1304.0\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.3.0.1304.0\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\ContainerBootstrapper.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\GenericPathRoute.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\UnityDependencyResolver.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\SiteController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Extensions\SeoExtensions.cs" />
+    <Compile Include="Extensions\UserAuthorizeAttribute.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\WebHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="Images\Admin\b.png" />
+    <Content Include="Images\Admin\bg-body.gif" />
+    <Content Include="Images\Admin\bg-button-green.gif" />
+    <Content Include="Images\Admin\bg-content-box.gif" />
+    <Content Include="Images\Admin\bg-form-field.gif" />
+    <Content Include="Images\Admin\bg-login-top.png" />
+    <Content Include="Images\Admin\bg-login.gif" />
+    <Content Include="Images\Admin\bg-menu-item-current.gif" />
+    <Content Include="Images\Admin\bg-menu-item-green.gif" />
+    <Content Include="Images\Admin\bg-radial-gradient.gif" />
+    <Content Include="Images\Admin\bg-sidebar.gif" />
+    <Content Include="Images\Admin\bl.png" />
+    <Content Include="Images\Admin\br.png" />
+    <Content Include="Images\Admin\closelabel.gif" />
+    <Content Include="Images\Admin\icons\bullet_black.png" />
+    <Content Include="Images\Admin\icons\clock_48.png" />
+    <Content Include="Images\Admin\icons\comment_48.png" />
+    <Content Include="Images\Admin\icons\cross.png" />
+    <Content Include="Images\Admin\icons\cross_circle.png" />
+    <Content Include="Images\Admin\icons\cross_grey_small.png" />
+    <Content Include="Images\Admin\icons\exclamation.png" />
+    <Content Include="Images\Admin\icons\hammer_screwdriver.png" />
+    <Content Include="Images\Admin\icons\image_add_48.png" />
+    <Content Include="Images\Admin\icons\information.png" />
+    <Content Include="Images\Admin\icons\jquery.wysiwyg.gif" />
+    <Content Include="Images\Admin\icons\paper_content_pencil_48.png" />
+    <Content Include="Images\Admin\icons\pencil.png" />
+    <Content Include="Images\Admin\icons\pencil_48.png" />
+    <Content Include="Images\Admin\icons\tick_circle.png" />
+    <Content Include="Images\Admin\logo.png" />
+    <Content Include="Images\Admin\menu-current-arrow.gif" />
+    <Content Include="Images\Admin\shortcut-button-bg.gif" />
+    <Content Include="Images\Admin\tl.png" />
+    <Content Include="Images\Admin\tr.png" />
+    <Content Include="Scripts\jqeasyui\easyui-lang-zh_CN.js" />
+    <Content Include="Scripts\jqeasyui\jquery.easyui.min.js" />
+    <Content Include="Style\Admin\jqeasyui\easyui.css" />
+    <Content Include="Style\Admin\jqeasyui\icon.css" />
+    <Content Include="Style\Admin\jqeasyui\icons\back.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\blank.gif" />
+    <Content Include="Style\Admin\jqeasyui\icons\cancel.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\cut.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\edit_add.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\edit_remove.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\filesave.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\help.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\mini_add.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\mini_edit.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\mini_refresh.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\no.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\ok.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\pencil.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\print.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\redo.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\reload.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\search.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\sum.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\tip.png" />
+    <Content Include="Style\Admin\jqeasyui\icons\undo.png" />
+    <Content Include="Scripts\jquery.min.js" />
+    <Content Include="Style\Admin\invalid.css" />
+    <Content Include="Style\Admin\jqeasyui\images\accordion_arrows.png" />
+    <Content Include="Style\Admin\jqeasyui\images\blank.gif" />
+    <Content Include="Style\Admin\jqeasyui\images\calendar_arrows.png" />
+    <Content Include="Style\Admin\jqeasyui\images\combo_arrow.png" />
+    <Content Include="Style\Admin\jqeasyui\images\datagrid_icons.png" />
+    <Content Include="Style\Admin\jqeasyui\images\datebox_arrow.png" />
+    <Content Include="Style\Admin\jqeasyui\images\layout_arrows.png" />
+    <Content Include="Style\Admin\jqeasyui\images\linkbutton_bg.png" />
+    <Content Include="Style\Admin\jqeasyui\images\loading.gif" />
+    <Content Include="Style\Admin\jqeasyui\images\menu_arrows.png" />
+    <Content Include="Style\Admin\jqeasyui\images\messager_icons.png" />
+    <Content Include="Style\Admin\jqeasyui\images\pagination_icons.png" />
+    <Content Include="Style\Admin\jqeasyui\images\panel_tools.png" />
+    <Content Include="Style\Admin\jqeasyui\images\searchbox_button.png" />
+    <Content Include="Style\Admin\jqeasyui\images\slider_handle.png" />
+    <Content Include="Style\Admin\jqeasyui\images\spinner_arrows.png" />
+    <Content Include="Style\Admin\jqeasyui\images\tabs_icons.png" />
+    <Content Include="Style\Admin\jqeasyui\images\tree_icons.png" />
+    <Content Include="Style\Admin\jqeasyui\images\validatebox_warning.png" />
+    <Content Include="Style\Admin\reset.css" />
+    <Content Include="Style\Admin\style.css" />
+    <Content Include="Style\site.css" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Images\Admin\jqeasyui\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Haxgo.Core\Haxgo.Core.csproj">
+      <Project>{175d384c-19d9-4d65-91d2-4c2a7949274b}</Project>
+      <Name>Haxgo.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Haxgo.Data\Haxgo.Data.csproj">
+      <Project>{cbf7d4d3-090c-4237-bafb-97e83dd9bbc5}</Project>
+      <Name>Haxgo.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Haxgo.Entities\Haxgo.Entities.csproj">
+      <Project>{e7c76f65-07a7-418e-8550-f5552221ba41}</Project>
+      <Name>Haxgo.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Haxgo.Services\Haxgo.Services.csproj">
+      <Project>{cbbf6185-58bf-4ac4-a3ee-b10a3c2102c8}</Project>
+      <Name>Haxgo.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\UserList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Category\CategoryList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Style\Admin\jqeasyui\images\Thumbs.db" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Menu\MenuList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Site\SiteList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_SiteLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Menu\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Category\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Search\Index.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:29101/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

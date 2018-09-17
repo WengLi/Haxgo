@@ -1,0 +1,212 @@
+﻿@{
+    ViewBag.Title = "SiteList";
+    ViewBag.TopHref = "#Site";
+    ViewBag.ChildHref = "/Site/SiteList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content-box">
+    <table id="dg" title="站点列表" class="easyui-datagrid" style="height: 500px"></table>
+</div>
+<div id="tb" style="padding:5px;height:auto">
+        <div style="margin-bottom:5px">
+            <label>网站名:</label>
+            <input class="text-input small-input" type="text" id="SiteName"/>
+            <label>类别:</label>
+            <input class="text-input small-input easyui-combotree" type="text" id="CategoryBox" data-options="url:'/Category/CategoryTreeJson'"/>            
+            <label>所属菜单:</label>
+            <input class="text-input small-input easyui-combobox" type="text" id="MenuBox" data-options="valueField:'Id',textField:'Name',url:'/Menu/MenuJson'"/>
+            <label>首页显示:</label>
+            <select id="IsHome" class="easyui-combobox"><option>-请选择-</option><option value="true">是</option><option value="false">否</option></select>
+            <label>子栏目显示:</label>
+            <select id="IsBar" class="easyui-combobox"><option>-请选择-</option><option value="true">是</option><option value="false">否</option></select>
+            <a id="btnSearch" class="easyui-linkbutton" iconCls="icon-search">查找</a>
+             <br />
+            <a id="btnadd" class="easyui-linkbutton" iconCls="icon-add" plain="true">新增</a>
+            <a id="btnedit" class="easyui-linkbutton" iconCls="icon-edit" plain="true">编辑</a>
+            <a id="btnremove" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+        </div>
+</div>
+<div id="dd" style="padding:10px;">
+<form id="myform" method="post" action="/Site/Edit" enctype="multipart/form-data">
+    <input type="hidden" name="Id" />
+    <fieldset>
+        <p>
+            <label>网站名</label>
+            <input class="text-input small-input easyui-validatebox" type="text" name="Name" data-options="required:true"/>
+            <br />
+            <small>请填写网站名</small>
+        </p>
+        <p>
+            <label>网址</label>
+            <input class="text-input small-input easyui-validatebox" type="text" name="Url" data-options="required:true"/>
+            <br />
+            <small>请填写网址</small>
+        </p>
+        <p>
+            <label>Logo</label>
+            <input type="file" name="SiteLogo" id="SiteLogo" /><br />
+            <img alt="logo" style="width: 50px;height: 50px;"/>
+            <br />
+            <small>请选择Logo</small>
+        </p>
+        <p>
+            <label>类别</label>
+            <input class="text-input small-input easyui-combotree" type="text" name="CategoryId" data-options="url:'/Category/CategoryTreeJson',required:true"/>
+            <br />
+            <small>请填写类别</small>
+        </p>
+        <p>
+            <label>首页显示</label>
+            <input class="easyui-combobox" name="Is_Home" data-options="
+		        valueField: 'value',
+		        textField: 'label',
+		        data: [{
+			        label: '是',
+			        value: true
+		        },{
+			        label: '否',
+			        value: false
+		        }],required:true" />
+            <br />
+            <small>请选择首页显示</small>
+        </p>
+        <p>
+            <label>子栏目显示</label>
+            <input class="easyui-combobox" name="Is_Bar" data-options="
+		        valueField: 'value',
+		        textField: 'label',
+		        data: [{
+			        label: '是',
+			        value: true
+		        },{
+			        label: '否',
+			        value: false
+		        }],required:true" />
+            <br />
+            <small>请选择子栏目显示</small>
+        </p>
+        <p>
+            <label>显示顺序</label>
+            <input type="text" class="text-input small-input easyui-numberbox" name="ShowOrder" data-options="min:0,precision:0,required:true">
+            <br />
+            <small>请填写显示顺序</small>
+        </p>
+        <p>
+            <label>关键字</label>
+            <input class="text-input small-input easyui-validatebox" type="text" name="KeyWord" data-options="required:true,validType:'length[0,250]'"/>
+            <br />
+            <small>请填写关键字</small>
+        </p>
+        <p>
+            <label>描述</label>
+            <textarea class="easyui-validatebox" name="Description" style="width:200px;height:200px;" data-options="required:true"></textarea>
+            <br />
+            <small>请填写描述</small>
+        </p>
+        @*<p>
+            <label>所属菜单</label>
+            <input class="text-input small-input easyui-combobox" type="text" name="MenuId" data-options="valueField:'Id',textField:'Name',url:'/Menu/MenuJson',required:true"/>
+            <br />
+            <small>请填写菜单</small>
+        </p>*@
+        <p>
+            <input class="button" type="submit" value="提交" />
+        </p>
+    </fieldset>
+</form>
+</div>
+<script type="text/javascript">
+    $('#dg').datagrid({
+        url: '/Site/SiteListJson',
+        pagination: true,
+        fitColumns: true,
+        rownumbers: true,
+        singleSelect: true,
+        columns: [[
+            { field: 'Name', title: '网站名', width: 200 },
+            { field: 'Url', title: '网址', width: 200 },
+            { field: 'Logo', title: 'Logo', width: 200, formatter: function (value, row, index) { return "<img src='"+value+"' style='height:50px;width:50px;'/>" }},
+            { field: 'CategoryName', title: '网站所属类别', width: 200 },
+            { field: 'MenuName', title: '网站所属菜单', width: 200 },
+            { field: 'Is_Home', title: '首页显示', width: 200, formatter: function (value, row, index) { if (value == true) return "是"; else return "否";} },
+            { field: 'Is_Bar', title: '子栏目显示', width: 200, formatter: function (value, row, index) { if (value == true) return "是"; else return "否"; } },
+            { field: 'ShowOrder', title: '显示顺序', width: 200 }
+        ]],
+        toolbar: '#tb',
+        onDblClickRow: function (rowIndex, rowData) {
+            if (rowData != undefined) {
+                $("#myform").attr("action", "/Site/Edit");
+                $("#myform").form('clear');
+                $("#myform").form('load', rowData);
+                $("#SiteLogo").next().next().attr("src", rowData.Logo);
+                $("#dd").dialog('open');
+            }
+        }
+    });
+    $("#btnadd").click(function () {
+        $("#myform").attr("action", "/Site/Add");
+        $("#myform").form('clear');
+        $("#SiteLogo").next().next().attr("src", "");
+        $("#dd").dialog('open');
+    });
+    $("#btnedit").click(function () {
+        var data = $('#dg').datagrid("getSelections")[0];
+        if (data != undefined) {
+            $("#myform").attr("action", "/Site/Edit");
+            $("#myform").form('clear');
+            $("#myform").form('load', data);
+            $("#SiteLogo").next().next().attr("src", data.Logo);
+            $("#dd").dialog('open');
+        }
+    });
+    $("#btnremove").click(function () {
+        var data = $('#dg').datagrid("getSelections")[0];
+        if (data != undefined) {
+            $.messager.confirm('确认', '确认删除?', function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '/Site/Delete?id=' + data.Id,
+                        success: function () {
+                            $.messager.alert('消息', '删除成功');
+                        }
+                    });
+                    var index = $('#dg').datagrid('getRowIndex', data);
+                    $('#dg').datagrid('deleteRow', index);
+                }
+            })
+        }
+    });
+    $("#btnSearch").click(function () {
+        $('#dg').datagrid("reload", {
+            cateid: $('#CategoryBox').combotree('getValue'),
+            menuid: $('#MenuBox').combobox('getValue'),
+            ishome: $('#IsHome').combobox('getValue'),
+            isbar: $('#IsBar').combobox('getValue'),
+            name: $("#SiteName").val()
+        });
+    });
+    $("#myform").form({
+        onSubmit: function () {
+            if ($(this).form("validate") == false)
+                return false;
+        },
+        success: function (data) {
+            if (data == "true") {
+                $("#dd").dialog('close');
+                $.messager.alert('消息', '操作成功');
+                $('#dg').datagrid('reload');
+            }
+            else {
+                $.messager.alert('消息', '操作失败');
+            }
+        }
+    });
+    $("#dd").dialog({
+        title: '新增或编辑网站',
+        width: 800,
+        height: 600,
+        closed: true,
+        cache: false,
+        modal: true
+    });
+</script>

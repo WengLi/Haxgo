@@ -1,0 +1,90 @@
+﻿@using Haxgo.Data
+@using Haxgo.Entities
+@using Haxgo.Core
+@using Haxgo.Core.Caching
+@using Haxgo.Web.Extensions
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <script src="/Scripts/jquery.min.js?ver=1.8.3" type="text/javascript"></script>
+    <link rel="stylesheet" href="/Style/site.css" type="text/css" media="screen" />
+</head>
+<body>
+    <div id="header" class="clearfix">
+        <div id="header-bd" class="clearfix  dib-wrap nowrap">
+            <div class="logo dib">
+                <a class="main-logo" target="_top" href="/">导航</a>
+                <a class="en-logo" target="_top" href="/"><span>Haxgo.com</span></a>
+            </div>
+            <div class="common-search dib" id="searchbox">
+                <form target="_self" action="/Search">
+                    <div class="s-ipt-container">
+                        <div class="search-combobox search-combobox-shown" aria-disabled="false" aria-pressed="false">
+                            <div class="search-combobox-input-wrap">
+                                <input id="wd" class="search-combobox-input" accesskey="s" type="search" autocomplete="off" name="wd" value="@ViewBag.KeyWord" placeholder="请输入搜索内容" maxlength="512" aria-haspopup="true" aria-combobox="list" role="combobox" x-webkit-grammar="builtin:translate" aria-label="请输入搜索文字" title="请输入搜索文字" tabindex="0" aria-expanded="true" hidefocus="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="s-btn-container">
+                        <input type="submit" value="搜">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="content">
+        <div id="menulist">
+            <div>
+                <h4><a href="/" target="_self">首页</a></h4>
+                <span></span>
+            </div>
+@{
+    List<Menu> menulist = CacheManager.Get(Consts.MenuCacheKey) as List<Menu>;
+    if (menulist == null)
+    {
+        IRepository<Menu> MenuBLL = (IRepository<Menu>)DependencyResolver.Current.GetService(typeof(IRepository<Menu>));
+        menulist = MenuBLL.Table.ToList();
+        CacheManager.Insert(Consts.MenuCacheKey, menulist);
+    }
+    int i = 1;
+}
+            @foreach(var item in menulist.OrderBy(o => o.ShowOrder))
+            {
+            <div>
+                <h4><a menuid="@item.Id" href="@Url.RouteUrl("Menu", new { SeName = item.GetSeName() })" target="_self">@item.Name</a></h4>
+                @if (i < menulist.Count)
+                {
+                     <span></span>
+                }
+            </div>
+                i++;
+                }
+        </div>
+        @RenderBody()
+    </div>
+    <div id="footer">
+        <div id="footer-bd">     
+           <div class="link">
+             <div class="link-list dib-wrap">
+                
+             </div>
+             <div class="copyright">
+                 Copyright&nbsp;©&nbsp;2010-2013&nbsp;HAXGO.COM&nbsp;版权所有
+             </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var ele = $("#menulist h4 a[menuid='@ViewBag.MenuId']");
+        if(ele.length > 0)
+            ele.addClass("select");
+        else
+            $("#menulist h4 a[href='/']").addClass("select");
+    });
+</script>
+</html>

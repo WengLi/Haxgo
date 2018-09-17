@@ -1,0 +1,240 @@
+﻿@using Haxgo.Entities
+@using Haxgo.Web.Extensions
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+    Guid MenuId = ViewBag.MenuId;
+    List<Category> catelist = ViewBag.Categorys as List<Category>;
+    List<Site> sitelist = ViewBag.Sites as List<Site>;
+}
+<style type="text/css">
+.hotscreen {
+overflow: hidden;
+}
+.box {
+margin-bottom: 35px;
+}
+.hc-main {
+float: left;
+width: 990px;
+}
+.hc-cat {
+float: left;
+width: 128px;
+border: 1px solid #dbdbdb;
+}
+.box h2 {
+font-size: 18px;
+font-weight: normal;
+margin-bottom: 15px;
+color: #101010;
+font-family: '\5fae\8f6f\96c5\9ed1','microsoft yahei','\5b8b\4f53',sans-serif;
+}
+.hc-cat h2 {
+height: 36px;
+line-height: 36px;
+border-bottom: 2px solid #dbdbdb;
+margin-bottom: 0;
+font-size: 18px;
+text-align: center;
+}
+.hc-cat ul {
+margin-top: -1px;
+min-height: 340px;
+}
+.hc-cat li {
+font: normal 14px/34px '\5fae\8f6f\96c5\9ed1','microsoft yahei','\5b8b\4f53',sans-serif;
+}
+.hc-cat li a {
+display: block;
+width: 108px;
+height: 34px;
+line-height: 34px;
+padding-left: 20px;
+color: #333;
+}
+.hc-cat li a:hover {
+color: #fff;
+background-color: #ff3e07;
+text-decoration: none;
+transition: none 0s ease-in-out;
+-moz-transition: none 0s ease-in-out;
+-webkit-transition: none 0s ease-in-out;
+-o-transition: none 0s ease-in-out;
+-ms-transition: none 0s ease-in-out;
+}
+.hc-reco {
+float: left;
+width: 850px;
+margin-left: 10px;
+overflow: hidden;
+}
+.reco-hd {
+height: 40px;
+}
+.reco-hd h2 {
+float: left;
+margin: 8px 0 5px;
+}
+.reco-hd ul {
+float: right;
+margin-top: 14px;
+}
+.reco-hd li {
+float: left;
+margin-left: 20px;
+}
+.reco-hd li a {
+color: #f60;
+}
+.reco-bd {
+width: 846px;
+height: 337px;
+border: 1px solid #dcdcdc;
+overflow: hidden;
+}
+.reco-bd ul {
+width: 850px;
+overflow: hidden;
+}
+.reco-bd li {
+float: left;
+width: 120px;
+height: 112px;
+border: 1px solid #dcdcdc;
+margin: -1px 0 0 -1px;
+overflow: hidden;
+}
+.reco-bd li a {
+display: block;
+width: 90px;
+height: 45px;
+margin: 20px 19px 0 18px;
+}
+#content img {
+vertical-align: top;
+}
+.reco-bd li p {
+height: 18px;
+line-height: 18px;
+padding: 10px 5px 0;
+text-align: center;
+color: #9e9e9e;
+overflow: hidden;
+}
+.reco-bd li p strong {
+color: #f40;
+font-weight: normal;
+font-size: 14px;
+}
+.name-list {
+width: 848px;
+overflow: hidden;
+border: 1px solid #cacac7;
+margin-top: 20px;
+}
+.name-list h2 {
+width: 834px;
+height: 31px;
+font-size: 14px;
+padding-left: 14px;
+line-height: 31px;
+position: relative;
+background-color: #f3f3f3;
+border-bottom: 1px solid #cacac7;
+margin-bottom: 0;
+}
+.name-list ul li {
+text-align: center;
+float: left;
+width: 106px;
+height:75px;
+border-bottom: 1px solid #dcdcdc;
+overflow: hidden;
+margin-bottom: -1px;
+}
+.daquan-pic-box {
+width: 80px;
+height: 60px;
+overflow: hidden;
+margin-left: 13px;
+margin-top: 10px;
+}
+li a.pic-80 {
+width: 80px;
+height: 40px;
+}
+li a.pic {
+display: table-cell;
+vertical-align: middle;
+text-align: center;
+}
+li a.pic img {
+vertical-align: middle;
+}
+li a.pic-80 img {
+max-width: 80px;
+max-height: 40px;
+}
+a {
+color: #666;
+}
+</style>
+<div class="hotscreen box clearfix" style="margin-top:10px">
+    <div><p>您的位置：<a href="/">首页</a>&gt; <a href="@Url.RouteUrl("Menu", new { SeName = ViewBag.SeName })">@(ViewBag.MenuName)</a></p></div>
+    <div class="hc-main clearfix">
+        <div class="hc-cat">
+                <h2>全部分类</h2>
+                <ul>
+                    @foreach (Category cate in catelist.Where(o => o.MenuId == MenuId).OrderBy(o => o.ShowOrder))
+                    {
+                        <li><a href="@Url.RouteUrl("Category", new { SeName = ViewBag.SeName, CategoryName = cate.GetSeName() })">@cate.Name</a></li> 
+                    }
+                </ul>
+        </div>
+        <div class="hc-reco">
+           <div>
+            <div class="reco-hd clearfix">       
+                <h2>@(ViewBag.MenuName)推荐</h2>      
+                <ul class="clearfix">           
+                    <li><a href="#" title="" data-stat=""></a></li>      
+                </ul>
+            </div>
+            <div class="reco-bd">
+                <ul class="clearfix">
+                    @foreach (Site item in sitelist.Where(o => o.Is_Bar == true && o.MenuId == MenuId).OrderByDescending(o => o.Is_Bar).ThenBy(o => o.ShowOrder).Take(21))
+                    {
+                    <li>
+                        <div class="reco-logo">
+                            <a href="@item.Url" title="@item.Description" target="_blank"><img class="J_png_img" width="90" height="45" src="@item.Logo" alt="@item.Name"></a>
+                            <p><strong>@item.Name</strong></p>
+                        </div>
+                    </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix">
+        @foreach (Category cate in catelist.Where(o => o.MenuId == MenuId).OrderBy(o => o.ShowOrder))
+        {
+        <div class="name-list">
+            <h2>@cate.Name</h2>
+            <ul>
+                @foreach (Site site in sitelist.Where(o => o.CategoryId == cate.Id).OrderByDescending(o => o.Is_Bar).ThenBy(o => o.ShowOrder))
+                  {
+                        <li>
+                            <div class="daquan-pic-box">
+                                <a class="pic pic-80" href="@site.Url" title="@site.Description" target="_blank">
+                                    <img src="@site.Logo" alt="@site.Name">
+                                </a>
+                                <a href="@site.Url"><p>@site.Name</p></a>
+                            </div>
+                        </li>
+                    }
+            </ul>
+        </div>
+        }
+      </div>
+        </div>
+    </div>
+</div>

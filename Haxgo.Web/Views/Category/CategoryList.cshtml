@@ -1,0 +1,161 @@
+﻿@{
+    ViewBag.Title = "CategoryList";
+    ViewBag.TopHref = "#Category";
+    ViewBag.ChildHref = "/Category/CategoryList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content-box">
+    <table id="tg" title="网站分类列表" class="easyui-datagrid" style="height: 500px"></table>
+</div>
+<div id="tb" style="padding:5px;height:auto">
+        <div style="margin-bottom:5px">
+            <a id="btnadd" class="easyui-linkbutton" iconCls="icon-add" plain="true">新增</a>
+            <a id="btnedit" class="easyui-linkbutton" iconCls="icon-edit" plain="true">编辑</a>
+            <a id="btnremove" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>            
+            <label>所属菜单:</label>
+            <input class="text-input small-input easyui-combobox" type="text" id="MenuBox" data-options="valueField:'Id',textField:'Name',url:'/Menu/MenuJson'"/>
+            <a id="btnSearch" class="easyui-linkbutton" iconCls="icon-search">查找</a>
+        </div>
+</div>
+<div id="dd" style="padding:10px;">
+<form id="myform" method="post" action="/Menu/Edit">
+    <input type="hidden" name="Id" id="Id" />
+    <fieldset>
+        <p>
+            <label>分类名</label>
+            <input class="text-input small-input easyui-validatebox" type="text" name="Name" data-options="required:true"/>
+            <br />
+            <small>请填写分类名</small>
+        </p>
+        @*<p>
+            <label>父级类别</label>
+            <input id="ParentTree" class="text-input small-input easyui-combotree" type="text" name="ParentId" data-options="url:'/Category/CategoryTreeJson'"/>
+            <br />
+            <small>请填写父级类别</small>
+        </p>*@
+        <p>
+            <label>所属菜单</label>
+            <input class="text-input small-input easyui-combobox" type="text" name="MenuId" data-options="valueField:'Id',textField:'Name',url:'/Menu/MenuJson',required:true"/>
+            <br />
+            <small>请填写菜单</small>
+        </p>
+        <p>
+            <label>显示顺序</label>
+            <input type="text" class="text-input small-input easyui-numberbox" name="ShowOrder" data-options="min:0,precision:0,required:true">
+            <br />
+            <small>请填写显示顺序</small>
+        </p>
+        <p>
+            <input class="button" type="submit" value="提交" />
+        </p>
+    </fieldset>
+</form>
+</div>
+<script type="text/javascript">
+    $('#tg').datagrid({
+        url: '/Category/CategoryListJson',
+        pagination: false,
+        fitColumns: true,
+        rownumbers: true,
+        singleSelect: true,
+        columns: [[
+            { title: '类别名', field: 'Name', width: 100 },
+            { title: '所属菜单', field: 'MenuName', width: 100 },
+            { title: '显示顺序', field: 'ShowOrder', width: 100 }
+        ]],
+        toolbar: '#tb',
+        onDblClickRow: function (rowIndex, rowData) {
+            if (rowData != undefined) {
+                $("#myform").attr("action", "/Category/Edit");
+                $("#myform").form('load', rowData);
+                $("#ParentId").val(rowData.ParentId);
+                $("#dd").dialog('open');
+            }
+        }
+    });
+    $("#btnadd").click(function () {
+        $("#myform").attr("action", "/Category/Add");
+        $("#myform").form('clear');
+        $("#dd").dialog('open');
+    });
+    $("#btnedit").click(function () {
+        var data = $('#tg').datagrid("getSelected");
+        if (data != undefined) {
+            $("#myform").attr("action", "/Category/Edit");
+            $("#myform").form('load', data);
+            $("#ParentId").val(data.ParentId);
+            $("#dd").dialog('open');
+        }
+    });
+    $("#btnremove").click(function () {
+        var data = $('#tg').datagrid("getSelections")[0];
+        if (data != undefined) {
+            $.messager.confirm('确认', '确认删除?', function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '/Category/Delete?id=' + data.Id,
+                        success: function () {
+                            $.messager.alert('消息', '删除成功');
+                            var index = $('#tg').datagrid('getRowIndex', data);
+                            $('#tg').datagrid('deleteRow', index);
+                            //$("#ParentTree").combotree('reload');
+                        }
+                    });
+                }
+            })
+        }
+    });
+    $("#btnSearch").click(function () {
+        $('#tg').datagrid("reload", { menuid: $('#MenuBox').combobox('getValue') });
+    });
+    $("#myform").form({
+        onSubmit: function () {
+            if ($(this).form("validate") == false)
+                return false;
+            //easyui  树 上级不能选择自己或子结点 
+            //var t = $('#ParentTree').combotree('tree');
+            //var n = t.tree('getSelected');
+            //while (n != null) {
+            //    if ($("#Id").val() == n.id) {
+            //        $.messager.alert('消息', '父级节点选择有误');
+            //        return false;
+            //    }
+            //    n = t.tree("getParent", n.target)
+            //}
+        },
+        success: function (data) {
+            if (data == "true") {
+                $("#dd").dialog('close');
+                $.messager.alert('消息', '操作成功');
+                $('#tg').datagrid("reload");
+                //$("#ParentTree").combotree('reload');
+            }
+            else {
+                $.messager.alert('消息', '操作失败');
+            }
+        }
+    });
+    $("#dd").dialog({
+        title: '新增或编辑分类',
+        width: 800,
+        height: 500,
+        closed: true,
+        cache: false,
+        modal: true
+    });
+    //function GetCategoryName(value, row, index) {
+    //    if (value) {
+    //        return GetName(value, $('#tg').treegrid("getData"));
+    //    }
+    //    else
+    //        return "";
+    //}
+    //function GetName(id, data) {
+    //    for (var i = 0; i < data.length;i++) {
+    //        if (data[i].Id == id)
+    //            return data[i].Name;
+    //        else
+    //            return GetName(id, data[i].children);
+    //    }
+    //}
+</script>

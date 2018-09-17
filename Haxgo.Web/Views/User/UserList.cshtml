@@ -1,0 +1,117 @@
+﻿@{
+    ViewBag.Title = "UserList";
+    ViewBag.TopHref = "#User";
+    ViewBag.ChildHref = "/User/UserList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content-box">
+    <table id="dg" title="用户列表" class="easyui-datagrid" style="height: 500px"></table>
+</div>
+<div id="dd" style="padding:10px;">
+<form id="myform" method="post" action="/User/Edit">
+    <input type="hidden" name="Id" />
+    <fieldset>
+        <p>
+            <label>用户名</label>
+            <input class="text-input small-input easyui-validatebox" type="text" name="Name" data-options="required:true"/>
+            <br />
+            <small>请填写用户名</small>
+        </p>
+        <p>
+            <label>密码</label>
+            <input class="text-input small-input easyui-validatebox" type="password" name="PassWord" data-options="required:true"/>
+            <br />
+            <small>请填写用户名</small>
+        </p>
+        <p>
+            <input class="button" type="submit" value="提交" />
+        </p>
+    </fieldset>
+</form>
+</div>  
+<script type="text/javascript">
+    $('#dg').datagrid({
+        url: '/User/UserListJson',
+        pagination: true,
+        fitColumns: true,
+        rownumbers: true,
+        singleSelect: true,
+        columns: [[
+            { field: 'Name', title: '帐号名', width: 200 }
+        ]],
+        toolbar: [{
+            iconCls: 'icon-add',
+            text: '新增',
+            handler: function () {
+                $("#myform").attr("action", "/User/Add");
+                $("#myform").form('clear');
+                $("#dd").dialog('open');
+            }
+        }, '-', {
+            iconCls: 'icon-edit',
+            text: '编辑',
+            handler: function () {
+                var data = $('#dg').datagrid("getSelections")[0];
+                if (data != undefined) {
+                    data.PassWord = "";
+                    $("#myform").attr("action", "/User/Edit");
+                    $("#myform").form('load', data);
+                    $("#dd").dialog('open');
+                }
+            }
+        }, '-', {
+            iconCls: 'icon-cancel',
+            text: '删除',
+            handler: function () {
+                var data = $('#dg').datagrid("getSelections")[0];
+                if (data != undefined)
+                {
+                    $.messager.confirm('确认', '确认删除?', function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: '/User/Delete?id=' + data.Id,
+                                success: function () {
+                                    $.messager.alert('消息', '删除成功');
+                                }
+                            });
+                            var index = $('#dg').datagrid('getRowIndex', data);
+                            $('#dg').datagrid('deleteRow', index);
+                        }
+                    })
+                }
+            }
+        }],
+        onDblClickRow: function (rowIndex, rowData) {
+            if (rowData != undefined) {
+                rowData.PassWord = "";
+                $("#myform").attr("action", "/User/Edit");
+                $("#myform").form('load', rowData);
+                $("#dd").dialog('open');
+            }
+        }
+    });
+    $("#myform").form({   
+        onSubmit: function () {
+            if ($(this).form("validate") == false)
+                return false;
+        },   
+        success: function (data) {
+            if (data == "true") {
+                $("#dd").dialog('close');
+                $.messager.alert('消息', '操作成功');
+                $('#dg').datagrid('reload');
+            }
+            else {
+                $.messager.alert('消息', '操作失败');
+            }
+        }   
+    });
+    $("#dd").dialog({
+        title: '新增或编辑用户',
+        width: 800,
+        height: 300,
+        closed: true,
+        cache: false,
+        modal: true
+    });
+</script>

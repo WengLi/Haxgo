@@ -1,0 +1,9 @@
+﻿@using Haxgo.Web.Helper
+@{
+    ViewBag.Title = "Index";
+    ViewBag.TopHref = "/Admin/Index";
+    ViewBag.ChildHref = "/Admin/Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>欢迎你：@WebHelper.CurrentUser.Name</h2>

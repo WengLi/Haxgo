@@ -1,0 +1,52 @@
+﻿@using Haxgo.Entities
+@using Haxgo.Web.Extensions
+@model List<Site>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+}
+<style type="text/css">
+.hotscreen {
+overflow: hidden;
+}
+.box {
+margin-bottom: 35px;
+}
+a {
+color: #666;
+}
+</style>
+<div class="hotscreen box clearfix" style="margin-top:10px">
+    <div style="border-bottom:1px solid #aaa;"><p>您的位置：<a href="/">首页</a>&gt; <a href="javascript:;">搜索关键字"@ViewBag.KeyWord"(<span style="color:red;">@ViewBag.Count</span>条记录)</a></p></div>
+@if (Model.Count > 0)
+{
+    foreach (Site item in Model)
+    {
+    <div style="text-align: left;margin-top: 25px;width:988px;border-bottom:1px solid #aaa;" class="clearfix">
+        <div style="float:left;width:80px;height:60px;">
+            <a href="@item.Url" target="_blank" style="width: 80px;height: 40px;">
+                <img src="@item.Logo" style="width: 80px;height: 40px;">
+            </a>
+        </div>
+        <div style="float:left;margin-left:20px;height:60px;width:800px;">
+			<div style="float:left;width:100%;text-align:left;font-weight:bold;font-size: 15px;height:auto;"><a href="@item.Url" target="_blank" style="text-decoration:underline;color:red;">@item.Name</a></div>
+			<div title="@item.Description" style="float:left;width:100%;text-align:left;color: #333;">@(item.Description.Length <= 80 ? item.Description : item.Description.Substring(0, 80) + "...")</div>
+            <div style="float:left;width:100%;text-align:left;">站点：<a href="@Url.RouteUrl("Menu", new { SeName = SeoExtensions.GetSeName<Menu>(item.MenuId) })">@item.MenuName</a>&nbsp;&nbsp;&nbsp;&nbsp;分类：<a href="@Url.RouteUrl("Category", new { SeName = SeoExtensions.GetSeName<Menu>(item.MenuId), CategoryName = SeoExtensions.GetSeName<Category>(item.CategoryId) })">@item.CategoryName</a>&nbsp;&nbsp;&nbsp;&nbsp;网址：<a href="@item.Url" target="_blank">@item.Url</a></div>
+		</div>
+    </div> 
+    }
+} else{
+    if (string.IsNullOrEmpty(ViewBag.KeyWord)) { 
+        <div style="font-size:14px;text-align:left;color:#333;margin-top:20px;background:#f2f2f2;width:100%;padding-top:5px;margin-bottom:15px;line-height:23px;">
+            关键词不能为空！
+        </div>
+    }
+    else{
+        <div style="font-size:14px;text-align:left;color:#333;margin-top:20px;background:#f2f2f2;width:100%;padding-top:5px;margin-bottom:15px;line-height:23px;">
+            关键词:
+            "<span style="color:red;font-size:16px;"><strong>@ViewBag.KeyWord</strong></span>"
+            共 <span style="color:red;font-size:16px;"><strong>@ViewBag.Count</strong></span> 个相关结果，请尝试输入其它关键词查询
+        </div>
+    }
+}
+</div>
